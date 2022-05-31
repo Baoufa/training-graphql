@@ -1,5 +1,4 @@
 import authorModel from './Author.model.mjs';
-import BookRepository from '../book/Book.repository.mjs';
 
 class AuthorRepository {
   constructor() {
@@ -14,6 +13,10 @@ class AuthorRepository {
     return await this.model.findById(id).populate('books');
   }
 
+  async getByFilter(filter) {
+    return await this.model.find(filter);
+  }
+
   async create(author) {
     return await this.model.create(author);
   }
@@ -23,7 +26,6 @@ class AuthorRepository {
   }
 
   async delete(id) {
-    
     return await this.model.findByIdAndRemove(id);
   }
 
@@ -34,12 +36,6 @@ class AuthorRepository {
     }
     author.books.push(...booksIdArray);
     await author.save();
-
-    booksIdArray.forEach(async bookId => {
-      const book = new BookRepository();
-      await book.addAuthorsToBook(bookId, [authorId]);
-    });
-
     return await author.populate('books');
   }
 

@@ -1,19 +1,26 @@
-const events = [
-  {
-    title: 'Le circus pinder',
-    organizer: 'Johny la Taupe',
-  },
-  {
-    title: 'la magie des chats',
-    organizer: 'Boby party',
-  },
-];
-
+import EventRepository from '../../db/repository/event/Event.repository.mjs';
 
 const eventResolver = {
   Query: {
-    events: () => events,
+    events: async (parent, args, context, info) => {
+      return await new EventRepository().getAll();
+    },
+    event: async (parent, args, context, info) => {
+      return await new EventRepository().getById(args.id);
+    }
   },
+
+  Mutation: { 
+    createEvent: async (parent, args, context, info) => {
+      return await new EventRepository().create(args.input);
+    },
+    updateEvent: async (parent, args, context, info) => {
+      return await new EventRepository().update(args.id, args.input);
+    },  
+    deleteEvent: async (parent, args, context, info) => {
+      return await new EventRepository().delete(args.id);
+    }
+  }
 };
 
 export default eventResolver;

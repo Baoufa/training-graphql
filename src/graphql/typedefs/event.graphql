@@ -1,8 +1,88 @@
+scalar ObjectId
+scalar latitude
+scalar longitude
+scalar PostalCode
+scalar URL
+
+enum EventType {
+  CONCERT
+  THEATER
+}
+
 type Event {
-  title: String
+  _id: ObjectId!
+  title: String!
+  eventType: EventType!
   organizer: String
+  location: Location
+  description: String
+  website: URL
+  date: DateObject
+  place: Place
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+type Location {
+  geoLocation: GeoLocation
+  address: String
+  postalCode: PostalCode
+}
+
+type DateObject {
+  startDate: String
+  endDate: String
+}
+
+type GeoLocation {
+  lat: latitude
+  lng: longitude
+}
+
+type Place {
+  totalPlace: Int
+  bookedPlace: Int
+}
+
+input EventInput {
+  title: String!
+  eventType: EventType!
+  organizer: String
+  location: LocationInput
+  description: String
+  website: URL
+  date: DateInput
+  place: PlaceInput
+}
+
+input LocationInput {
+  geoLocation: GeoLocationInput
+  address: String
+  PostalCode: PostalCode
+}
+
+input GeoLocationInput {
+  lat: latitude
+  lng: longitude
+}
+
+input DateInput {
+  startDate: DateTime
+  endDate: DateTime
+}
+
+input PlaceInput {
+  totalPlace: Int
+  bookedPlace: Int
 }
 
 type Query {
   events: [Event]
+  event(id: ObjectId): Event
+}
+
+type Mutation {
+  createEvent(input: EventInput): Event
+  updateEvent(id: ObjectId!, input: EventInput): Event
+  deleteEvent(id: ObjectId!): Event
 }
