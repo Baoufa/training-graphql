@@ -62,8 +62,8 @@ input LocationInput {
 }
 
 input GeoLocationInput {
-  lat: latitude
-  lng: longitude
+  lat: Latitude
+  lng: Longitude
 }
 
 input DateInput {
