@@ -1,6 +1,6 @@
 scalar ObjectId
-scalar latitude
-scalar longitude
+scalar Latitude
+scalar Longitude
 scalar PostalCode
 scalar URL
 
@@ -35,8 +35,8 @@ type DateObject {
 }
 
 type GeoLocation {
-  lat: latitude
-  lng: longitude
+  lat: Latitude
+  lng: Longitude
 }
 
 type Place {

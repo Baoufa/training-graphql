@@ -16,7 +16,7 @@ const bookResolver = {
         books: _id,
       });
       const authorsIdArray = authorsArray.map(author => author._id);
-      authorsIdArray.forEach(async authorId => {
+      await authorsIdArray.forEach(async authorId => {
         await new AuthorRepository().removeBooksFromAuthor(authorId, [_id._id]);
       });
       return await new BookRepository().delete(_id);

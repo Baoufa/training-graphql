@@ -6,8 +6,6 @@ import mongoConnect from './src/db/mongoConnect.mjs';
 import schema from './src/graphql/index.mjs';
 
 // CONNECTION MONGO DB
-
-
 async function startApolloServer(typeDefs, resolvers) {
   // Required logic for integrating with Express
   const app = express();
