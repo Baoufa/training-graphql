@@ -1,0 +1,47 @@
+scalar ObjectId
+scalar Date
+scalar DateTime
+
+type Book {
+  _id: ObjectId
+  title: String!
+  authors: [Author]
+  date: String
+  pageCount: Int
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+input BookInput {
+  title: String!
+  date: String
+  pageCount: Int
+}
+
+type Query {
+  books: [Book]
+  book(_id: ObjectId!): Book
+}
+
+type Mutation {
+  createBook(
+    input : BookInput!
+  ): Book
+
+  updateBook(
+    _id: ObjectId!,
+    input : BookInput!
+  ): Book
+
+  deleteBook(_id: ObjectId!): Book
+
+  addAuthorsToBook(
+    bookId: ObjectId!
+    authorsIdArray: [ObjectId!]!
+  ): Book
+
+  removeAuthorsFromBook(
+    bookId: ObjectId!
+    authorsIdArray: [ObjectId!]!
+  ): Book
+}

@@ -1,0 +1,8 @@
+type Event {
+  title: String
+  organizer: String
+}
+
+type Query {
+  events: [Event]
+}

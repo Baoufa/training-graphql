@@ -1,0 +1,26 @@
+{
+  "name": "md1-intro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon --experimental-specifier-resolution=node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@graphql-tools/load-files": "^6.5.3",
+    "@graphql-tools/merge": "^8.2.13",
+    "@graphql-tools/schema": "^8.3.13",
+    "apollo-server-core": "^3.8.1",
+    "apollo-server-express": "^3.8.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "graphql": "^16.5.0",
+    "graphql-scalars": "^1.17.0",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.3.4"
+  }
+}

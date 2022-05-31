@@ -1,0 +1,55 @@
+scalar Date
+scalar DateTime
+scalar ObjectId
+
+enum Nationality {
+  FRANCE
+  SPAIN
+  ITALY
+}
+
+type Author {
+  _id: ObjectId
+  name: String!
+  nationality: Nationality
+  birthdate: String
+  birthplace: String
+  books: [Book]
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+input AuthorInput {
+  name: String!
+  nationality: Nationality
+  birthdate: String
+  birthplace: String
+}
+
+type Query {
+  authors: [Author]
+  author(_id: ObjectId!): Author
+}
+
+type Mutation {
+  createAuthor(
+    input : AuthorInput!
+  ): Author
+
+  updateAuthor(
+    _id: ObjectId!
+    input : AuthorInput!
+  ): Author
+
+  deleteAuthor(_id: ObjectId!): Author
+
+  addBooksToAuthor(
+    authorId: ObjectId!
+    booksIdArray: [ObjectId!]!
+  ): Author
+
+  removeBooksFromAuthor(
+    authorId: ObjectId!
+    booksIdArray: [ObjectId!]!
+  ): Author
+}
