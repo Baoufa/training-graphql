@@ -7,7 +7,7 @@ const schemaOptions = {
 
 const bookSchema = mongoose.Schema({
   title: { type: String, required: true }, 
-  date : {  type: Number },
+  date : {  type: String },
   pageCount : { type: Number },
   authors: [
     {

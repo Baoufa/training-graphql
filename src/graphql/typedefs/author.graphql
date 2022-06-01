@@ -9,7 +9,7 @@ enum Nationality {
 }
 
 type Author {
-  _id: ObjectId
+  _id: ObjectId!
   name: String!
   nationality: Nationality
   birthdate: String

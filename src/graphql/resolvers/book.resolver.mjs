@@ -1,45 +1,84 @@
 import BookRepository from '../../db/repository/book/Book.repository.mjs';
 import AuthorRepository from '../../db/repository/author/Author.repository.mjs';
+import { getFields } from '../libs/utilities.mjs';
 
 const bookResolver = {
   Query: {
-    books: () => new BookRepository().getAll(),
-    book: (_, id) => new BookRepository().getById(id),
+    books: (parent, args, context, info) => {
+      const fields = getFields(info);
+      return new BookRepository().getAll(fields);
+    },
+
+    book: (_, id, context, info) => {
+      const fields = getFields(info);
+      return new BookRepository().getById(id, fields);
+    },
   },
 
   Mutation: {
-    createBook: (_, { input }) => new BookRepository().create(input),
-    updateBook: (_, { _id, input }) => new BookRepository().update(_id, input),
-    
-    deleteBook: async (_, _id) => {
-      const authorsArray = await new AuthorRepository().getByFilter({
-        books: _id,
-      });
-      const authorsIdArray = authorsArray.map(author => author._id);
-      await authorsIdArray.forEach(async authorId => {
-        await new AuthorRepository().removeBooksFromAuthor(authorId, [_id._id]);
-      });
-      return await new BookRepository().delete(_id);
+    createBook: (_, { input }, context, info) => {
+      return new BookRepository().create(input);
     },
 
-    addAuthorsToBook: async (_, { bookId, authorsIdArray }) => {
+    updateBook: (_, { _id, input }, context, info) => {
+      const fields = getFields(info);
+      return new BookRepository().update(_id, input, fields);
+    },
+
+    deleteBook: async (_, _id, context, info) => {
+      const fields = getFields(info);
+      const authorsArray = await new AuthorRepository().getByFilter(
+        {
+          books: _id,
+        },
+        fields
+      );
+      const authorsIdArray = authorsArray.map(author => author._id);
       await authorsIdArray.forEach(async authorId => {
-        await new AuthorRepository().addBookstoAuthor(authorId, [bookId]);
+        await new AuthorRepository().removeBooksFromAuthor(
+          authorId,
+          [_id._id],
+          fields
+        );
+      });
+      return await new BookRepository().delete(_id, fields);
+    },
+
+    addAuthorsToBook: async (_, { bookId, authorsIdArray }, context, info) => {
+      const fields = getFields(info);
+      await authorsIdArray.forEach(async authorId => {
+        await new AuthorRepository().addBookstoAuthor(
+          authorId,
+          [bookId],
+          fields
+        );
       });
       return await new BookRepository().addAuthorsToBook(
         bookId,
-        authorsIdArray
+        authorsIdArray,
+        fields
       );
     },
 
-    removeAuthorsFromBook: async (_, { bookId, authorsIdArray }) => {
+    removeAuthorsFromBook: async (
+      _,
+      { bookId, authorsIdArray },
+      context,
+      info
+    ) => {
+      const fields = getFields(info);
       await authorsIdArray.forEach(async authorId => {
-        await new AuthorRepository().removeBooksFromAuthor(authorId, [bookId]);
+        await new AuthorRepository().removeBooksFromAuthor(
+          authorId,
+          [bookId],
+          fields
+        );
       });
 
       return await new BookRepository().removeAuthorsFromBook(
         bookId,
-        authorsIdArray
+        authorsIdArray,
+        fields
       );
     },
   },

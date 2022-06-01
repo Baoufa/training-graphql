@@ -3,7 +3,7 @@ scalar Date
 scalar DateTime
 
 type Book {
-  _id: ObjectId
+  _id: ObjectId!
   title: String!
   authors: [Author]
   date: String

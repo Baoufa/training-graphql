@@ -5,12 +5,16 @@ class EventRepository {
     this.model = eventModel;
   }
 
-  async getAll() {
-    return await this.model.find();
+  async getAll(fields) {
+    return await this.model
+      .find()
+      .select(fields[0])
   }
 
-  async getById(id) {
-    return await this.model.findById(id);
+  async getById(id, fields) {
+    return await this.model
+      .findById(id)
+      .select(fields[0])
   }
 
   async getByFilter(filter) {

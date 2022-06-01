@@ -9,6 +9,7 @@ import schema from './src/graphql/index.mjs';
 async function startApolloServer(typeDefs, resolvers) {
   // Required logic for integrating with Express
   const app = express();
+
   const httpServer = http.createServer(app);
 
   // Same ApolloServer initialization as before, plus the drain plugin.
@@ -28,7 +29,7 @@ async function startApolloServer(typeDefs, resolvers) {
     // By default, apollo-server hosts its GraphQL endpoint at the
     // server root. However, *other* Apollo Server packages host it at
     // /graphql. Optionally provide this to match apollo-server.
-    path: '/',
+    path: '/graphql',
   });
 
   // Modified server startup
